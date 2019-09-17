@@ -1,0 +1,8 @@
+JAVA_TIMEZONE=Europe/Stockholm
+MB_DB_TYPE=postgres
+MB_DB_DBNAME=metabase
+MB_DB_PORT=5432
+MB_DB_USER=metabase
+MB_DB_PASS=somecomplexpassword
+MB_DB_HOST=metabase-postgres
+MB_ENCRYPTION_SECRET_KEY=somecomplexsecretkey

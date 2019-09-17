@@ -1,0 +1,10 @@
+traefik.enable=true
+traefik.default.protocol=http
+traefik.docker.network=web
+traefik.backend=backend
+traefik.frontend.rule=Host:something.domain.com
+traefik.port=3000
+traefik.frontend.rateLimit.extractorFunc=client.ip
+traefik.frontend.rateLimit.rateSet.r1.period=3s
+traefik.frontend.rateLimit.rateSet.r1.average=50
+traefik.frontend.rateLimit.rateSet.r1.burst=15

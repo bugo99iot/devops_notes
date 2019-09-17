@@ -1,0 +1,3 @@
+# DevOps Notes
+
+A repo containing notes on vm-setup, deployment with Traefik + Docker, Postgres setup, etc...

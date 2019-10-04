@@ -2,8 +2,8 @@ version: '3'
 
 services:
     app:
-        build: ..
-        container_name: acdc_app
+        build: ../..
+        container_name: some_name
         env_file: env
         environment:
           - IS_DOCKER=y
@@ -11,12 +11,14 @@ services:
             # if you mount this volume, changes in local app will reflect changes inside container (useful for dev)
             - ./src:/app
             # data folder containing ML model weights
-            - /data/acdc/ml_models:/data/acdc/ml_models
+            - /data/ml_models:/data/ml_models
             # logs folder
-            - data/acdc/logs/:/var/log/acdc_app/
+            - data/some_name/logs/:/var/log/asome_name/
         ports:
             - "8990:8990"
-        command: python manage.py runserver 0.0.0.0:8990
+        command: gunicorn -c gunicorn_settings.py api.wsgi
+        # command: python manage.py runserver 0.0.0.0:8990
+
 
 networks:
   default:

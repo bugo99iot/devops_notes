@@ -12,3 +12,7 @@ jupyter-setup: ## setup juopyter to work with a specific venv
 	jupyter notebook
 	# Installing packages thereafter
 	source py_36_env/bin/activate && pip install some_package
+	# or stright in notebook (just !pip install won't work, won't find the right venv)
+	# https://jakevdp.github.io/blog/2017/12/05/installing-python-packages-from-jupyter/
+	import sys
+	!{sys.executable} -m pip install some_package

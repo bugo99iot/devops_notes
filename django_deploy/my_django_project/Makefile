@@ -2,8 +2,6 @@
 help:
 	@awk 'BEGIN {FS = ":.*?## "} /^[0-9a-zA-Z_-]+:.*?## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
-
-
 .PHONY: start-local
 start-local: ## run app on local environment, hit http://0.0.0.0:8990/
 	. venv/bin/activate && cd src && python manage.py runserver 0.0.0.0:8990

@@ -33,21 +33,3 @@ set-up-db-and-user: # set up database and user
 	\q;
 	exit
 
-
-.PHONY: postgres-build-with-postgis
-postgres-build-with-postgis: ## screate analytics database with postgis
-	docker build -t postgres-postgis .
-
-
-.PHONY: postgres-start-with-postgis
-postgres-start-with-postgis: ## start analytics database with postgis
-	docker create network postgres-network || true
-	docker container stop postgres-db-postgis || true
-	docker container rm postgres-db-postgis || true
-	docker run \
-		--restart unless-stopped \
-		--name postgres-db-postgis \
-		--network postgres-network \
-		-p 5434:5432 \
-		-v /data/postgres:/var/lib/postgresql/data \
-		postgres-postgis

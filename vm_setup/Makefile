@@ -6,6 +6,18 @@ help:
 	@awk 'BEGIN {FS = ":.*?## "} /^[0-9a-zA-Z_-]+:.*?## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
 
+.PHONY: crate-user
+create-user: ## create user in new VM
+	ssh root@someip
+	adduser deploy
+	usermod -aG sudo deploy
+	su - deploy
+	mkdir .ssh
+	cd .ssh
+	touch authorized_keys
+	# add ssh key from remote to authorized_keys
+
+
 .PHONY: set-up-docker
 set-up-docker: ## set up docker in new VM
 	ssh deploy@someip
@@ -16,6 +28,7 @@ set-up-docker: ## set up docker in new VM
 	# log out and log in again
 	exit
 	ssh deploy@someip
+
 
 .PHONY: set-up-zerotier
 set-up-zerotier: # set up zerotier in new vm

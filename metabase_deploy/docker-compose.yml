@@ -24,9 +24,9 @@ services:
     networks:
       - web
     volumes:
-      - /data/metabase/metabase_data:/metabase-data
+      - /data/metabase/metabase-data:/metabase-data
     environment:
-      - JAVA_TIMEZONE=Europe/Stockholm
+      - JAVA_TIMEZONE=Europe/Amsterdam
       - MB_DB_TYPE=postgres
       - MB_DB_DBNAME=metabase
       - MB_DB_PORT=5432

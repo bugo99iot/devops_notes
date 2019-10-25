@@ -32,7 +32,6 @@ set-up-docker: ## set up docker in new VM
 	sudo chmod +x /usr/local/bin/docker-compose
 
 
-
 .PHONY: set-up-zerotier
 set-up-zerotier: # set up zerotier in new vm
 	ssh deploy@someip
@@ -40,6 +39,11 @@ set-up-zerotier: # set up zerotier in new vm
 	sudo cat /var/lib/zerotier-one/authtoken.secret >>.zeroTierOneAuthToken
 	chmod 0600 .zeroTierOneAuthToken
 	zerotier-cli join somenetworkid
+
+.PHONY: add-entropy
+add-entropy: # on digital ocean server, metabase startup takes 30m, due to issue https://www.digitalocean.com/community/tutorials/how-to-setup-additional-entropy-for-cloud-servers-using-haveged
+	apt-get install haveged
+	update-rc.d haveged defaults
 
 
 .PHONY: set-up-drive

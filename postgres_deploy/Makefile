@@ -26,10 +26,12 @@ set-up-db-and-user: # set up database and user
 	## create user and db
 	CREATE ROLE someusername WITH LOGIN ENCRYPTED PASSWORD 'somecomplexpassword';
 	CREATE DATABASE somedbname;
-	GRANT ALL PRIVILEGES ON somedbname TO someusername;
+	GRANT ALL PRIVILEGES ON DATABASE somedbname TO someusername;
 	\q;
 	## verify
 	psql -d somedbname -U someuser # log in to db with user
 	\q;
 	exit
 
+
+textsjwyri3ye23

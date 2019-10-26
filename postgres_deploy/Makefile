@@ -32,6 +32,3 @@ set-up-db-and-user: # set up database and user
 	psql -d somedbname -U someuser # log in to db with user
 	\q;
 	exit
-
-
-textsjwyri3ye23

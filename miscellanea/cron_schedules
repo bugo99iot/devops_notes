@@ -1,0 +1,12 @@
+# launch docker
+# in iOS: /usr/local/bin/docker
+# in Linux: /usr/bin/docker
+
+# cron uses timezone on server, which is currently UTC
+# ($ date) if you want to check
+
+# path leading to location of env file on server
+ENV_FILE_PATH=/home/deploy/deployment/containers/scheduler/env
+
+# Get new data from stations every hour at 45 past
+# 45 * * * * /usr/bin/docker run --rm --network some_network --env-file=${ENV_FILE_PATH} --cpus="1.5" some_image python somepath/somescript.py >> /data/someLog_filename__`date +\%Y_\%m_\%d_\%H-\%M-\%S`.log 2>&1

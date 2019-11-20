@@ -1,0 +1,47 @@
+pipelines:
+
+    custom:
+
+        test_connection:
+            - step:
+                script:
+                    - ssh deploy@smth.com "w"
+
+    branches:
+
+        master:
+#            - step:
+#                name: run type checking and unit tests
+#                deployment: test
+#                image: python:3.6
+#                caches:
+#                    - pip
+#                script:
+#                    - apt update && apt install -y postgresql-clientß
+#                    - pip install -r requirements.txt
+#                    - mypy dags --ignore-missing-import
+#
+            - step:
+                name: build docker image
+                script:
+                    - export TAG=$(date "+%Y%m%d%H%M")-${BITBUCKET_COMMIT:(-8)}
+                    - echo $TAG > timestamp.txt
+                    - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD somedockerdomain
+                    # - docker build --build-arg RELEASE=$TAG --build-arg SSH_PRIVATE_KEY="$(cat /opt/atlassian/pipelines/agent/ssh/id_rsa|base64 -w0)" -t somedockerdomain/somecompany/someimagename:$TAG .
+                    # - docker tag nuvoairprod.azurecr.io/nuvoair/schedules:$TAG somedockerdomain/somecompany/someimagename:latest
+                    # - docker push somedockerdomain/somecompany/someimagename:$TAG
+                    - docker build --build-arg SSH_PRIVATE_KEY="$(cat /opt/atlassian/pipelines/agent/ssh/id_rsa|base64 -w0)" -t somedockerdomain/somecompany/someimagename .
+                    - docker push somedockerdomain/somecompany/someimagename
+                artifacts:
+                    - timestamp.txt
+            - step:
+                # deployment: production
+                name: deploy crons to server
+                script:
+                    - export TAG=$(cat timestamp.txt)
+                    - scp data_schedules deploy@smth.com:/home/deploy/deployment/containers/scheduler
+                    - ssh deploy@smth.com "cd /home/deploy/deployment && docker pull somedockerdomain/somecompany/someimagename && make deploy-crontabs"
+
+
+options:
+  docker: true
